@@ -96,6 +96,7 @@ Thank you!
 
     return Response.json({ success: true, aiSummary }, { status: 201 });
   } catch (error) {
+    console.error(error);
     return Response.json({ success: false, error }, { status: 500 });
   }
 }
