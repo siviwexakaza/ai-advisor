@@ -3,6 +3,7 @@ import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
 
 export async function GET(request: Request) {
+  console.log("HEY SIV!");
   return Response.json({ message: "Hello Siv" }, { status: 200 });
 }
 
@@ -90,6 +91,8 @@ Respond as a thoughtful human advisor, not a robot. Use clear, compassionate lan
 Thank you!
 `,
     });
+
+    console.log("RESPONSE", aiSummary);
 
     return Response.json({ success: true, aiSummary }, { status: 201 });
   } catch (error) {
