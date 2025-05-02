@@ -20,5 +20,5 @@ export const onboardingQuestions = {
   change_one_thing:
     "If you could change one thing in your relationship, what would it be?",
   commitment_level:
-    "How committed are you to improving your relationship on a scale from 1–10?",
+    "How committed are you to improving your relationship on a scale from 1 to 10?",
 };

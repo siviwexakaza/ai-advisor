@@ -92,7 +92,7 @@ Thank you!
 `,
     });
 
-    console.warn("RESPONSE", aiSummary);
+    console.warn(JSON.stringify(aiSummary));
 
     return Response.json({ success: true, aiSummary }, { status: 201 });
   } catch (error) {
