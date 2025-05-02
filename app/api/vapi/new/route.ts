@@ -3,7 +3,7 @@ import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
 
 export async function GET(request: Request) {
-  console.log("HEY SIV!");
+  console.warn("HEY SIV!");
   return Response.json({ message: "Hello Siv" }, { status: 200 });
 }
 
@@ -92,7 +92,7 @@ Thank you!
 `,
     });
 
-    console.log("RESPONSE", aiSummary);
+    console.warn("RESPONSE", aiSummary);
 
     return Response.json({ success: true, aiSummary }, { status: 201 });
   } catch (error) {
