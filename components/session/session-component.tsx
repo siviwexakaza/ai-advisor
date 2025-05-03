@@ -1,6 +1,12 @@
 "use client";
 
-import { Phone } from "lucide-react";
+import {
+  LucidePhone,
+  Phone,
+  PhoneCall,
+  PhoneIncoming,
+  PhoneOutgoing,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import React, { useEffect, useState } from "react";
@@ -32,13 +38,12 @@ function SessionComponent({
   userImage: string;
 }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [callStatus, setCallStatus] = useState<CallStatus>(
-    CallStatus.CONNECTING
-  );
+  const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const router = useRouter();
 
   const handleStartCall = async () => {
+    setCallStatus(CallStatus.CONNECTING);
     await vapi.start(process.env.NEXT_PUBLIC_VAPI_ONBOARDING_WORKFLOW!, {
       variableValues: {
         clerkid: coupleId,
@@ -94,10 +99,6 @@ function SessionComponent({
     if (callStatus === CallStatus.FINISHED) router.replace("/");
   }, [messages, callStatus, coupleId, type]);
 
-  useEffect(() => {
-    handleStartCall();
-  }, []);
-
   return (
     <div className="flex flex-col h-screen">
       {/* Meeting header */}
@@ -114,7 +115,7 @@ function SessionComponent({
           {/* First caller */}
           <div className="relative rounded-lg overflow-hidden bg-muted aspect-video flex items-center justify-center">
             <div className="relative w-18 h-18">
-              {!isSpeaking && (
+              {!isSpeaking && callStatus === CallStatus.ACTIVE && (
                 <span className="absolute inset-0 rounded-full animate-ping bg-green-400/75 opacity-95"></span>
               )}
 
@@ -138,7 +139,7 @@ function SessionComponent({
           {/* Second caller */}
           <div className="relative rounded-lg overflow-hidden bg-muted aspect-video flex items-center justify-center">
             <div className="relative w-18 h-18">
-              {isSpeaking && (
+              {isSpeaking && callStatus === CallStatus.ACTIVE && (
                 <span className="absolute inset-0 rounded-full animate-ping bg-green-400/75 opacity-95"></span>
               )}
 
@@ -153,7 +154,7 @@ function SessionComponent({
         </div>
       </div>
 
-      <div className="w-full text-center mb-8">
+      <div className="w-full text-center mb-2">
         {messages.length > 0 && (
           <p
             className={cn(
@@ -168,7 +169,7 @@ function SessionComponent({
 
       {/* Controls - only drop call button */}
       <div className="bg-background border-t p-4 flex justify-center">
-        {callStatus === "ACTIVE" ? (
+        {callStatus === "ACTIVE" && (
           <Button
             variant="destructive"
             size="icon"
@@ -177,9 +178,20 @@ function SessionComponent({
           >
             <Phone className="h-5 w-5 rotate-135" />
           </Button>
-        ) : (
-          <p>Connecting...</p>
         )}
+
+        {callStatus === "INACTIVE" && (
+          <Button
+            variant="default"
+            size="icon"
+            className="rounded-full h-12 w-12 bg-green-500"
+            onClick={handleStartCall}
+          >
+            <LucidePhone className="h-5 w-5 rotate-135" />
+          </Button>
+        )}
+
+        {callStatus === "CONNECTING" && <p>Connecting...</p>}
       </div>
     </div>
   );

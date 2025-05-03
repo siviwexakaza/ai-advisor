@@ -73,12 +73,16 @@ export async function POST(request: Request) {
       `,
     });
 
-    await prisma.onboardingSummary.create({
+    console.log(`Saving summary for ClerkID ${clerkid}`);
+
+    const summary = await prisma.onboardingSummary.create({
       data: {
         clerkId: clerkid,
-        summary: aiSummary,
+        summary: JSON.stringify(aiSummary),
       },
     });
+
+    console.log("Summary", summary);
 
     return Response.json({ success: true, aiSummary }, { status: 201 });
   } catch (error) {
