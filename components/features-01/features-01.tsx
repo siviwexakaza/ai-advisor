@@ -47,7 +47,7 @@ const features = [
   {
     icon: Users,
     title: "Seamless Collaboration",
-    description: "You will share the same account with your partner.",
+    description: "You and your partner will work together to complete tasks.",
   },
 ];
 

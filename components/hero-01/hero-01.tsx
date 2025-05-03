@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { SignInButton } from "@clerk/nextjs";
 import { ArrowUpRight, CirclePlay } from "lucide-react";
 import React from "react";
 
@@ -16,9 +17,12 @@ const Hero01 = () => {
           your journey together.
         </p>
         <div className="mt-12 flex items-center justify-center gap-4">
-          <Button size="lg" className="rounded-full text-base">
-            Start Your Journey <ArrowUpRight className="!h-5 !w-5" />
-          </Button>
+          <SignInButton mode="modal">
+            <Button size="lg" className="rounded-full text-base">
+              Start Your Journey <ArrowUpRight className="!h-5 !w-5" />
+            </Button>
+          </SignInButton>
+
           <Button
             variant="outline"
             size="lg"

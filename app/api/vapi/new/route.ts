@@ -1,9 +1,9 @@
 import { onboardingQuestions } from "@/data/prompts";
 import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
+import prisma from "@/lib/prisma";
 
 export async function GET(request: Request) {
-  console.warn("HEY SIV!");
   return Response.json({ message: "Hello Siv" }, { status: 200 });
 }
 
@@ -25,6 +25,7 @@ export async function POST(request: Request) {
       counseling_goals,
       change_one_thing,
       commitment_level,
+      clerkid,
     } = await request.json();
 
     const { text: aiSummary } = await generateText({
@@ -72,7 +73,12 @@ export async function POST(request: Request) {
       `,
     });
 
-    console.warn(JSON.stringify(aiSummary));
+    await prisma.onboardingSummary.create({
+      data: {
+        clerkId: clerkid,
+        summary: aiSummary,
+      },
+    });
 
     return Response.json({ success: true, aiSummary }, { status: 201 });
   } catch (error) {

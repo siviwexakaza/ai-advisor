@@ -1,10 +1,21 @@
 import SessionComponent from "@/components/session/session-component";
+import { getClerkUser } from "@/lib/auth";
+import { notFound } from "next/navigation";
 import React from "react";
 
-function Session() {
+async function Session() {
+  const user = await getClerkUser();
+
+  if (!user) {
+    notFound();
+  }
   return (
     <div className="min-h-screen bg-background">
-      <SessionComponent coupleId="123" type="new" />
+      <SessionComponent
+        userImage={user.imageUrl}
+        coupleId={user.id}
+        type="new"
+      />
     </div>
   );
 }

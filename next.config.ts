@@ -7,7 +7,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.pexels.com",
+        hostname: "yt3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "img.clerk.com",
       },
     ],
   },
