@@ -8,6 +8,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  console.log("NEW POST REQUEST");
   try {
     const {
       describe_relationship,
@@ -27,6 +28,8 @@ export async function POST(request: Request) {
       commitment_level,
       clerkid,
     } = await request.json();
+
+    console.log(`Saving summary for ClerkID 1 ${clerkid}`);
 
     const { text: aiSummary } = await generateText({
       model: google("gemini-2.0-flash-001"),
