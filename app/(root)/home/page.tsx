@@ -6,6 +6,7 @@ import React from "react";
 import { PackageOpen } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Summary from "@/components/Summary";
 
 async function Home() {
   const user = await getClerkUser();
@@ -20,7 +21,6 @@ async function Home() {
     },
   });
 
-  console.log("SUMMAR", summary);
   return (
     <div className="min-h-screen px-6">
       <div className="flex flex-row justify-between">
@@ -54,7 +54,9 @@ async function Home() {
           </p>
         </div>
       ) : (
-        <p>Summary</p>
+        <div className="mt-4">
+          <Summary summary={summary.summary} />
+        </div>
       )}
     </div>
   );
